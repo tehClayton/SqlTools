@@ -16,7 +16,7 @@ while ignoring any comments.
 ### Install sql_helpers library
 `pip install -e .`
 
-### Run unit tests (coming soon in a PR):
+### Run tests:
 `pytest sql_helpers/`
 
 
