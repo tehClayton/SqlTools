@@ -12,7 +12,7 @@ def iter_commands(script_body):
     for _line in script_body.splitlines():
         line_num += 1
         line = _line.strip()
-        cmd.append(_line)  # Append original unstripped line
+        cmd.append(line)
         if line.endswith(";") and not line.startswith("#"):
             yield (line_num, cmd_start_line, cmd_num, "\n".join(cmd))
             cmd_num += 1
