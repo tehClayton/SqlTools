@@ -19,6 +19,17 @@ from sql_helpers.iter_commands import iter_commands
             """,
             [(3, 1, 1, "\n# Get all users\nSELECT * FROM users;")]
         ),
+        # Single SQL statement with comment in middle of statement
+        (
+            """
+                # Get all users
+                SELECT
+                    # User ids only!
+                    id
+                FROM users;
+            """,
+            [(6, 1, 1, "\n# Get all users\nSELECT\n# User ids only!\nid\nFROM users;")]
+        ),
         # Single SQL statement followed by comment
         (
             """
@@ -43,6 +54,30 @@ from sql_helpers.iter_commands import iter_commands
                 (3, 1, 1, "\n# Get all users\nSELECT * FROM users;"),
                 (8, 4, 2, "\n# Get all users with similar interests\n"
                           "SELECT * FROM\nusers\nWHERE interest IN ('audiobooks', 'drums');")
+            ]
+        ),
+        # Three SQL statements each with comments
+        (
+            """
+                # Get all users
+                SELECT * FROM users;
+
+                # Get all users with similar interests
+                SELECT * FROM
+                    users
+                WHERE interest IN ('audiobooks', 'drums');
+
+                # Get all users with dissimilar interests
+                SELECT * FROM
+                    users
+                WHERE interest NOT IN ('audiobooks', 'drums');
+            """,
+            [
+                (3, 1, 1, "\n# Get all users\nSELECT * FROM users;"),
+                (8, 4, 2, "\n# Get all users with similar interests\n"
+                          "SELECT * FROM\nusers\nWHERE interest IN ('audiobooks', 'drums');"),
+                (13, 9, 3, "\n# Get all users with dissimilar interests\n"
+                           "SELECT * FROM\nusers\nWHERE interest NOT IN ('audiobooks', 'drums');")
             ]
         ),
         # Single SQL statement with semi-colon on newline
